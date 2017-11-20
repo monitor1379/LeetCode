@@ -1,6 +1,7 @@
 #include <iostream>
+#include <map>
 #include <vector>
-#include <unordered_map>
+
 using namespace std;
 
 // https://leetcode.com/problems/two-sum/description
@@ -10,51 +11,39 @@ class Solution
 public:
     vector<int> twoSum(vector<int>& nums, int target)
     {
-        unordered_map<int, int> mp;
-        vector<int> result(2);
+        map<int, int> m;
+        vector<int> result;
 
         for(size_t i = 0; i < nums.size(); ++i)
         {
-            if(mp.find(nums[i]) == mp.end())
+            if(m.find(nums[i]) == m.end())
             {
-                mp[target - nums[i]] = i;
+                m[target - nums[i]] = i;
             }
             else
             {
-                result[0] = mp[nums[i]];
-                result[1] = i;
-                break;
+                result.push_back(m[nums[i]]);
+                result.push_back(i);
             }
         }
         return result;
     }
 };
 
-
-void display(unordered_map<int, int> mp)
-{
-    unordered_map<int, int>::iterator it;
-    for(it = mp.begin(); it != mp.end(); ++it)
-    {
-        cout << it->first << ", " << it->second << endl;
-    }
-
-}
-
 void display_vector(vector<int> v)
 {
-    vector<int>::iterator it;
-    for(it = v.begin(); it != v.end(); ++it)
-        cout << *it << ", ";
+    for(size_t i = 0; i < v.size(); ++i)
+        cout << v[i] << ", ";
     cout << endl;
 }
 int main()
 {
-    Solution s;
-    vector<int> nums = {2, 8, 11, 15, 7};
+    vector<int> nums = {1, 2, 9, 7, 10};
     int target = 9;
 
-    display_vector(nums);
+    Solution s;
     display_vector(s.twoSum(nums, target));
+
+
     return 0;
 }
