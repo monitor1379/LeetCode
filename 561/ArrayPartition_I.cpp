@@ -7,7 +7,8 @@ using namespace std;
 // https://leetcode.com/problems/array-partition-i/description/
 
 
-class Solution {
+class Solution 
+{
 public:
     /*
     We need to form the pairings of the array's elements such that the overall sum
@@ -25,7 +26,8 @@ public:
     pairings of elements with minimum difference between them leading to the maximization
     of the required sum.
     */
-    int arrayPairSum(vector<int>& nums) {
+    int arrayPairSum(vector<int>& nums) 
+    {
         int s = 0;
         sort(nums.begin(), nums.end());
         for(int i = 0; i < nums.size(); i += 2)

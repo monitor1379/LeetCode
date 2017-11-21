@@ -6,9 +6,11 @@ using namespace std;
 
 // https://leetcode.com/problems/contains-duplicate/description/
 
-class Solution {
+class Solution 
+{
 public:
-    bool containsDuplicate(vector<int>& nums) {
+    bool containsDuplicate(vector<int>& nums) 
+    {
         map<int, int> m;
         for(int i: nums)
         {
