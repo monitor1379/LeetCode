@@ -16,6 +16,23 @@ public:
 
     Therefore, if we initialize an integer to n and XOR it with
     every index and value, we will be left with the missing number.
+
+    Mathematical Proof:
+    Rule 1. v XOR v = 0
+    Rule 2. u XOR 0 = u
+
+    given a array [0, ..., n], we get:
+        (0 XOR 0) XOR (1 XOR 1) XOR ... XOR (k XOR k) XOR ... XOR (n XOR x)
+      = 0 XOR 0 XOR ... XOR 0
+      = 0
+
+    if the missing number is k, then:
+        (0 XOR 0) XOR (1 XOR 1) XOR ... XOR k XOR ... XOR (n XOR x)
+      = 0 XOR 0 XOR ... XOR k XOR ... XOR 0
+      = k XOR 0
+      = k
+
+    so if we get k.
     */
     int missingNumber(vector<int>& nums)
     {
