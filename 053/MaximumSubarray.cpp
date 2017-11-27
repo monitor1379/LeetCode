@@ -4,15 +4,7 @@
 
 using namespace std;
 
-void display_2d_vector(vector<vector<int>>& v)
-{
-    for(vector<int> vi: v)
-    {
-        for(int i: vi)
-            cout << i << ", ";
-        cout << endl;
-    }
-}
+// https://leetcode.com/problems/maximum-subarray/description/
 
 void display_vector(vector<int>& v)
 {
