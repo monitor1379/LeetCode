@@ -7,15 +7,6 @@ using namespace std;
 // https://leetcode.com/problems/wiggle-sort/description/
 
 template<typename T>
-void display_2d_vector(vector<vector<T>> &v) {
-    for (vector<T> vi: v) {
-        for (T i: vi)
-            cout << i << ", ";
-        cout << endl;
-    }
-}
-
-template<typename T>
 void display_vector(vector<T> &v) {
     for (T i: v)
         cout << i << ", ";
@@ -44,6 +35,9 @@ public:
 
     /*
      * Approach #2: One-pass swap.
+     * 
+     * Time complexity:  O(n)
+     * Space complexity: O(1)
      *
      */
     void wiggleSort(vector<int> &nums) {
