@@ -13,7 +13,7 @@ public:
      * Space complexity: O(1)
      * 
      */
-    int shortestDistance(vector<string> &words, string word1, string word2) {
+    int shortestWordDistance(vector<string> &words, string word1, string word2) {
         int i = -words.size(), j = words.size();
         int d = words.size();
         bool same = word1 == word2;
