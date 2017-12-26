@@ -12,7 +12,11 @@ public:
         int result = 0;
         for (int i = 2; i < n; ++i) {
             if (m[i] == 1) ++result;
-            for (int j = 2; i * j < n; ++j)m[i * j] = 0;
+            // 慢
+            // for (int j = 2; i * j < n; ++j)m[i * j] = 0;
+
+            // 快
+            for (long long j = (long long) i * i; j < n; j += i) m[j] = 0;
         }
         return result;
     }
@@ -21,7 +25,7 @@ public:
 int main() {
 
     Solution s;
-    cout << s.countPrimes(100) << endl;
+    cout << s.countPrimes(499979) << endl;
 
     return 0;
 }
