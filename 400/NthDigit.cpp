@@ -14,9 +14,16 @@ string toString(T num) {
     return ss.str();
 }
 
+
 class Solution {
 public:
+    //n:       1,2,3,...9 | 10,11,...,99 | 100, 101,..., 999 |
+    //#digits:    9       |       90*2   |       900*3       |...|       (len*cnt: total number of digital of each segment)
+    //start:   1            10             100           (start number of each segment)
+    //len:     1            2              3             (number of digits of each number)
+    //cnt:     9            90             900           (total number of each segment)
     int findNthDigit(int n) {
+
         int t = 9;
         long long len = 1;
         int start = 1;
