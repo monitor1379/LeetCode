@@ -117,15 +117,34 @@ public:
 
 
 class Solution {
+private:
+    int cnt = 0;
+
 public:
 
+    int find(vector<int> &parent, int x) {
+        if (parent[x] == x)
+            return x;
+        // 路径压缩
+        parent[x] = find(parent, parent[x]);
+        return parent[x];
+    }
+
+    void union_set(vector<int> &parent, int x, int y) {
+        int px = find(parent, x);
+        int py = find(parent, y);
+        if (px != py) {
+            parent[px] = py;
+            --cnt;
+        }
+    }
 
     /*
      * Approach: Union Find(aka Disjoint Set).
      *
      *
-     * Time complexity:  O()
-     * Space complexity: O()
+     * Time complexity:  O(R * C)
+     * Space complexity: O(R * C)
      *
      *
      */
@@ -133,11 +152,37 @@ public:
         if (grid.empty() || grid[0].empty()) return 0;
         int R = grid.size(), C = grid[0].size();
         vector<int> parent(R * C, -1);
+
         for (int i = 0; i < R; ++i) {
             for (int j = 0; j < C; ++j) {
-                // TODO
+                if (grid[i][j] == '1')
+                    ++cnt;
+                parent[i * C + j] = i * C + j;
             }
         }
+
+        for (int i = 0; i < R; ++i) {
+            for (int j = 0; j < C; ++j) {
+                if (grid[i][j] == '1') {
+                    if (i >= 1 && grid[i - 1][j] == '1')
+                        union_set(parent, i * C + j, (i - 1) * C + j);
+                    if (i <= R - 2 && grid[i + 1][j] == '1')
+                        union_set(parent, i * C + j, (i + 1) * C + j);
+                    if (j >= 1 && grid[i][j - 1] == '1')
+                        union_set(parent, i * C + j, i * C + j - 1);
+                    if (j <= C - 2 && grid[i][j + 1] == '1')
+                        union_set(parent, i * C + j, i * C + j + 1);
+                }
+            }
+        }
+
+//        for (int i = 0; i < R; ++i) {
+//            for (int j = 0; j < C; ++j) {
+//                cout << parent[i * C + j] << ", ";
+//            }
+//            cout << endl;
+//        }
+        return cnt;
     }
 
 
