@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
@@ -25,7 +24,7 @@ void display_vector(vector<T> &v) {
 class Solution {
 public:
     /*
-     * Approach: Ad-Hoc.
+     * Approach2: Ad-Hoc.
      *
      * Time complexity:  O(len(A) * len(B))
      * Space complexity: O(1)
@@ -57,7 +56,7 @@ public:
     }
 
     /*
-     * Approach: Ad-Hoc.
+     * Approach3: Ad-Hoc.
      *
      * Time complexity:  O(len(A) * len(B))
      * Space complexity: O(len(A) + len(B))
@@ -92,56 +91,55 @@ public:
      * Time complexity:  O(len(A) + len(B))
      * Space complexity: O(1)
      *
+     * 通过计算两个字符串的hash值，比较其hash值是否相等，来判断两个字符串是否匹配。
+     * 适当构造hash函数，每次计算复杂度可为O(1)。
+     *
+     * 假设字符串A为"abcde"，给定质数p，计算"abcd"的hash值：
+     * hash("abcd") = p^3*'a' + p^2*'b' + p^1*'c' + p^0*'d'
+     *
+     * 则"bcde"的hash值可通过hash("abcd")递推：
+     * hash("bcde") = (hash("abcd") - p^3*'a') * p + 'e'
+     *
+     * 由于存在碰撞，因此两个字符串hash值相同时，检查一遍是否完全相等。
      *
      */
     int repeatedStringMatch(string A, string B) {
-        int prime = 17, mod = 1000000000;
-        int hashB = 0, power = 1;
+        int prime = 17;
 
-
-        for (int i = 0; i < B.size(); ++i) {
+        // 计算B的hash值
+        long long hashB = 0;
+        long long power = 1;
+        for (int i = B.size() - 1; i >= 0; --i) {
             hashB += power * getCode(B[i]);
-            hashB %= mod;
-            power = (power * prime) % mod;
+            power = (power * prime);
         }
-        cout << B << ": " << hashB << endl;
 
-        int hashA = 0;
+        // 计算A的hash值
+        long long hashA = 0;
         power = 1;
-        for (int i = 0; i < B.size(); ++i) {
+        for (int i = B.size() - 1; i >= 0; --i) {
             hashA += power * getCode(A[i % A.size()]);
-            hashA %= mod;
-            power = (power * prime) % mod;
+            power = (power * prime);
         }
         power /= prime;
 
-        // TODO p_inv
+        // 递推计算A拼成的字符串的hash值
         for (int i = B.size(); i < A.size() + B.size(); ++i) {
-            cout << "=========" << endl;
-            for (int j = i - B.size(); j < i; ++j)
-                cout << A[j % A.size()];
-            cout << ": " << hashA << endl;
             if (hashA == hashB && check(i - B.size(), A, B))
                 return (i - 1) / A.size() + 1;
-            cout << "minus:" << A[i - B.size()] << ", add:" << A[i % A.size()] << endl;
-            cout << hashA << endl;
-            hashA -= getCode(A[i - B.size()]);
-            cout << hashA << endl;
-            hashA /= prime; // TODO
-            cout << hashA << endl;
-            hashA += (power * getCode(A[i % A.size()])) % mod;
-            cout << hashA << endl;
+            hashA -= power * getCode(A[i - B.size()]);
+            hashA *= prime;
+            hashA += getCode(A[i % A.size()]);
         }
-
-        int result = 0;
-        return result;
+        return -1;
     }
 };
 
 int main() {
-    string a = "abcd";
-    string b = "cdabcda";
-
+//    string a = "abcd";
+//    string b = "cdabcdab";
+    string a = "a";
+    string b = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
     Solution s;
     cout << s.repeatedStringMatch(a, b) << endl;
